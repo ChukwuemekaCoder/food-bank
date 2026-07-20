@@ -1,10 +1,14 @@
 import uuid
+from datetime import datetime, timezone
 from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException, status
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 from sqlalchemy.orm import Session
 
 from app.auth.dependencies import get_current_user
+from app.core.config import settings
 from app.db.database import get_db
 from app.models.notification import Notification
 from app.schemas.notification import NotificationCreate, NotificationResponse
@@ -22,6 +26,26 @@ def create_notification(payload: NotificationCreate, db: Session = Depends(get_d
     db.add(notification)
     db.commit()
     db.refresh(notification)
+
+    if payload.channel == "email" and payload.recipient_email:
+        try:
+            message = Mail(
+                from_email=settings.sendgrid_from_email,
+                to_emails=payload.recipient_email,
+                subject=payload.trigger_event,
+                plain_text_content=f"Notification: {payload.trigger_event}",
+            )
+            sg = SendGridAPIClient(api_key=settings.sendgrid_api_key)
+            sg.send(message)
+            notification.status = "sent"
+            notification.sent_at = datetime.now(timezone.utc)
+        except Exception:
+            notification.status = "failed"
+        db.commit()
+        db.refresh(notification)
+
+    # channel="sms" or no recipient_email: status stays "pending", no Twilio call
+
     return notification
 
 

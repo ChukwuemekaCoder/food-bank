@@ -1,4 +1,5 @@
 import uuid
+from unittest.mock import MagicMock, patch
 
 NOTIFICATION = {
     "recipient_type": "donor",
@@ -45,3 +46,36 @@ def test_invalid_recipient_type(client):
 def test_invalid_channel(client):
     res = client.post("/notifications", json={**NOTIFICATION, "channel": "fax"})
     assert res.status_code == 422
+
+
+EMAIL_WITH_ADDRESS = {
+    **NOTIFICATION,
+    "recipient_email": "donor@example.com",
+}
+
+
+def test_email_sent_successfully(client):
+    mock_response = MagicMock()
+    mock_response.status_code = 202
+    with patch("app.routers.notifications.SendGridAPIClient") as MockSG:
+        MockSG.return_value.send.return_value = mock_response
+        res = client.post("/notifications", json=EMAIL_WITH_ADDRESS)
+    assert res.status_code == 201
+    data = res.json()
+    assert data["status"] == "sent"
+    assert data["sent_at"] is not None
+
+
+def test_email_send_failure_does_not_crash(client):
+    with patch("app.routers.notifications.SendGridAPIClient") as MockSG:
+        MockSG.return_value.send.side_effect = Exception("SendGrid error")
+        res = client.post("/notifications", json=EMAIL_WITH_ADDRESS)
+    assert res.status_code == 201
+    assert res.json()["status"] == "failed"
+
+
+def test_sms_stays_pending(client):
+    payload = {**NOTIFICATION, "channel": "sms", "recipient_email": None}
+    res = client.post("/notifications", json=payload)
+    assert res.status_code == 201
+    assert res.json()["status"] == "pending"

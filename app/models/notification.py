@@ -13,5 +13,6 @@ class Notification(Base):
     recipient_ref_id = Column(UUID(as_uuid=True), nullable=False)
     trigger_event = Column(String(50), nullable=False)
     channel = Column(String(10), nullable=False)  # email|sms
+    recipient_email = Column(String(255))
     status = Column(String(10), nullable=False, default="pending")
     sent_at = Column(DateTime(timezone=True))
