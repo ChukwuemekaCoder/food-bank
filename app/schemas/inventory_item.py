@@ -1,13 +1,13 @@
 import uuid
 from datetime import date, datetime
 from decimal import Decimal
-from typing import Optional
+from typing import Literal, Optional
 from pydantic import BaseModel, ConfigDict
 
 
 class InventoryItemBase(BaseModel):
     donation_id: Optional[uuid.UUID] = None
-    category: str  # produce|canned|dairy|frozen|dry_goods|other
+    category: Literal["produce", "canned", "dairy", "frozen", "dry_goods", "other"]
     description: Optional[str] = None
     quantity: Decimal
     unit: str

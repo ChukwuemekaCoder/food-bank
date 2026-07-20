@@ -7,7 +7,6 @@ from sqlalchemy.orm import Session
 from app.auth.dependencies import get_current_user
 from app.db.database import get_db
 from app.models.donor import Donor, Donation
-from app.models.staff_user import StaffUser
 from app.schemas.donor import DonorCreate, DonorResponse, DonationCreate, DonationResponse
 
 router = APIRouter(prefix="/donors", tags=["donors"], dependencies=[Depends(get_current_user)])

@@ -1,13 +1,13 @@
 import uuid
 from datetime import date, datetime
 from decimal import Decimal
-from typing import Optional
+from typing import Literal, Optional
 from pydantic import BaseModel, ConfigDict
 
 
 class DonorBase(BaseModel):
     name: str
-    type: str  # individual|business|org
+    type: Literal["individual", "business", "org"]
     email: Optional[str] = None
     phone: Optional[str] = None
     tax_id: Optional[str] = None
@@ -26,7 +26,7 @@ class DonorResponse(DonorBase):
 class DonationBase(BaseModel):
     donor_id: uuid.UUID
     received_date: date
-    donation_type: str  # food|funds|goods
+    donation_type: Literal["food", "funds", "goods"]
     estimated_value: Optional[Decimal] = None
     notes: Optional[str] = None
 
