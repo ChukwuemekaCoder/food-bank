@@ -32,3 +32,17 @@ class Donation(Base):
 
     donor = relationship("Donor", back_populates="donations")
     inventory_items = relationship("InventoryItem", back_populates="donation")
+    receipts = relationship("DonorReceipt", back_populates="donation")
+
+
+class DonorReceipt(Base):
+    __tablename__ = "donor_receipts"
+
+    receipt_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    donation_id = Column(UUID(as_uuid=True), ForeignKey("donations.donation_id"), nullable=False)
+    issue_date = Column(Date, nullable=False)
+    deductible_value = Column(Numeric(10, 2), nullable=False)
+    status = Column(String(20), nullable=False, default="draft")
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    donation = relationship("Donation", back_populates="receipts")

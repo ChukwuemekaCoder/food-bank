@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.routers import auth, donors, inventory_items, volunteers, shifts, recipients, routes, notifications
+from app.routers import auth, donors, inventory_items, volunteers, shifts, recipients, routes, notifications, receipts
 
 app = FastAPI(
     title="Food Bank Platform API",
@@ -16,6 +16,7 @@ app.include_router(shifts.router)
 app.include_router(recipients.router)
 app.include_router(routes.router)
 app.include_router(notifications.router)
+app.include_router(receipts.router)
 
 
 @app.get("/health")
