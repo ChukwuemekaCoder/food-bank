@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom'
-import { Bell, Home, LogOut, Package, Route, UserCheck, Users } from 'lucide-react'
+import { Bell, CalendarClock, Home, LogOut, Package, Route, UserCheck, Users } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 
 const navItems = [
   { to: '/dashboard/donors', label: 'Donors', icon: Users },
   { to: '/dashboard/inventory', label: 'Inventory', icon: Package },
   { to: '/dashboard/volunteers', label: 'Volunteers', icon: UserCheck },
+  { to: '/dashboard/shifts', label: 'Shifts', icon: CalendarClock },
   { to: '/dashboard/routes', label: 'Routes', icon: Route },
   { to: '/dashboard/recipients', label: 'Recipients', icon: Home },
   { to: '/dashboard/notifications', label: 'Notifications', icon: Bell },

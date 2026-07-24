@@ -9,6 +9,9 @@ import { DonorDetailPage } from '@/pages/DonorDetailPage'
 import { InventoryPage } from '@/pages/InventoryPage'
 import { InventoryDetailPage } from '@/pages/InventoryDetailPage'
 import { VolunteersPage } from '@/pages/VolunteersPage'
+import { VolunteerDetailPage } from '@/pages/VolunteerDetailPage'
+import { ShiftsPage } from '@/pages/ShiftsPage'
+import { ShiftDetailPage } from '@/pages/ShiftDetailPage'
 import { RoutesPage } from '@/pages/RoutesPage'
 import { RecipientsPage } from '@/pages/RecipientsPage'
 import { NotificationsPage } from '@/pages/NotificationsPage'
@@ -33,6 +36,9 @@ export default function App() {
                 <Route path="inventory" element={<InventoryPage />} />
                 <Route path="inventory/:id" element={<InventoryDetailPage />} />
                 <Route path="volunteers" element={<VolunteersPage />} />
+                <Route path="volunteers/:id" element={<VolunteerDetailPage />} />
+                <Route path="shifts" element={<ShiftsPage />} />
+                <Route path="shifts/:id" element={<ShiftDetailPage />} />
                 <Route path="routes" element={<RoutesPage />} />
                 <Route path="recipients" element={<RecipientsPage />} />
                 <Route path="notifications" element={<NotificationsPage />} />
