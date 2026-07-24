@@ -5,6 +5,7 @@ import { ProtectedRoute } from '@/components/ProtectedRoute'
 import { LoginPage } from '@/pages/LoginPage'
 import { DashboardLayout } from '@/pages/DashboardLayout'
 import { DonorsPage } from '@/pages/DonorsPage'
+import { DonorDetailPage } from '@/pages/DonorDetailPage'
 import { InventoryPage } from '@/pages/InventoryPage'
 import { VolunteersPage } from '@/pages/VolunteersPage'
 import { RoutesPage } from '@/pages/RoutesPage'
@@ -27,6 +28,7 @@ export default function App() {
               <Route path="/dashboard" element={<DashboardLayout />}>
                 <Route index element={<Navigate to="/dashboard/donors" replace />} />
                 <Route path="donors" element={<DonorsPage />} />
+                <Route path="donors/:id" element={<DonorDetailPage />} />
                 <Route path="inventory" element={<InventoryPage />} />
                 <Route path="volunteers" element={<VolunteersPage />} />
                 <Route path="routes" element={<RoutesPage />} />
