@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict, EmailStr
 
 
 class NotificationBase(BaseModel):
-    recipient_type: Literal["donor", "volunteer", "recipient"]
+    recipient_type: Literal["donor", "volunteer", "recipient", "staff"]
     recipient_ref_id: uuid.UUID
     trigger_event: str
     channel: Literal["email", "sms"]
