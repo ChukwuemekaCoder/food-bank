@@ -13,6 +13,7 @@ import { VolunteerDetailPage } from '@/pages/VolunteerDetailPage'
 import { ShiftsPage } from '@/pages/ShiftsPage'
 import { ShiftDetailPage } from '@/pages/ShiftDetailPage'
 import { RoutesPage } from '@/pages/RoutesPage'
+import { RouteDetailPage } from '@/pages/RouteDetailPage'
 import { RecipientsPage } from '@/pages/RecipientsPage'
 import { NotificationsPage } from '@/pages/NotificationsPage'
 
@@ -40,6 +41,7 @@ export default function App() {
                 <Route path="shifts" element={<ShiftsPage />} />
                 <Route path="shifts/:id" element={<ShiftDetailPage />} />
                 <Route path="routes" element={<RoutesPage />} />
+                <Route path="routes/:id" element={<RouteDetailPage />} />
                 <Route path="recipients" element={<RecipientsPage />} />
                 <Route path="notifications" element={<NotificationsPage />} />
               </Route>
