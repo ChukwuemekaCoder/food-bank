@@ -50,6 +50,11 @@ def test_list_donations(client):
     assert len(res.json()) == 1
 
 
+def test_list_donations_donor_not_found(client):
+    res = client.get("/donors/00000000-0000-0000-0000-000000000000/donations")
+    assert res.status_code == 404
+
+
 def test_donation_invalid_type(client):
     donor_id = client.post("/donors", json=DONOR).json()["donor_id"]
     res = client.post(

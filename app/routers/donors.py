@@ -49,4 +49,8 @@ def create_donation(donor_id: uuid.UUID, payload: DonationCreate, db: Session = 
 
 @router.get("/{donor_id}/donations", response_model=List[DonationResponse])
 def list_donor_donations(donor_id: uuid.UUID, db: Session = Depends(get_db)):
+    donor = db.query(Donor).filter(Donor.donor_id == donor_id).first()
+    if not donor:
+        raise HTTPException(status_code=404, detail="Donor not found")
+
     return db.query(Donation).filter(Donation.donor_id == donor_id).all()
