@@ -7,6 +7,7 @@ import { DashboardLayout } from '@/pages/DashboardLayout'
 import { DonorsPage } from '@/pages/DonorsPage'
 import { DonorDetailPage } from '@/pages/DonorDetailPage'
 import { InventoryPage } from '@/pages/InventoryPage'
+import { InventoryDetailPage } from '@/pages/InventoryDetailPage'
 import { VolunteersPage } from '@/pages/VolunteersPage'
 import { RoutesPage } from '@/pages/RoutesPage'
 import { RecipientsPage } from '@/pages/RecipientsPage'
@@ -30,6 +31,7 @@ export default function App() {
                 <Route path="donors" element={<DonorsPage />} />
                 <Route path="donors/:id" element={<DonorDetailPage />} />
                 <Route path="inventory" element={<InventoryPage />} />
+                <Route path="inventory/:id" element={<InventoryDetailPage />} />
                 <Route path="volunteers" element={<VolunteersPage />} />
                 <Route path="routes" element={<RoutesPage />} />
                 <Route path="recipients" element={<RecipientsPage />} />
