@@ -36,8 +36,11 @@ def test_no_expired_items(db):
 
 def test_marks_expired_and_sends_email(db):
     item = _item(db, expiration_date=PAST)
-    with patch("scripts.check_expirations.SendGridAPIClient", _mock_sg()):
-        result = check_expirations(db, check_date=date.today())
+    with patch("scripts.check_expirations.settings") as mock_settings:
+        mock_settings.sendgrid_api_key = "test-key"
+        mock_settings.sendgrid_from_email = "test@example.com"
+        with patch("scripts.check_expirations.SendGridAPIClient", _mock_sg()):
+            result = check_expirations(db, check_date=date.today())
     db.refresh(item)
     assert item.status == "expired"
     assert result["expired_count"] == 1
@@ -57,8 +60,11 @@ def test_sendgrid_failure_recorded(db):
     _item(db, expiration_date=PAST)
     mock_sg = MagicMock()
     mock_sg.return_value.send.side_effect = Exception("network error")
-    with patch("scripts.check_expirations.SendGridAPIClient", mock_sg):
-        result = check_expirations(db, check_date=date.today())
+    with patch("scripts.check_expirations.settings") as mock_settings:
+        mock_settings.sendgrid_api_key = "test-key"
+        mock_settings.sendgrid_from_email = "test@example.com"
+        with patch("scripts.check_expirations.SendGridAPIClient", mock_sg):
+            result = check_expirations(db, check_date=date.today())
     assert result["notification_status"] == "failed"
     n = db.query(Notification).first()
     assert n.status == "failed"
